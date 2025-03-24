@@ -80,31 +80,57 @@ int main (){
     printf("Quantidade de pontos turisticos: %d\n", qtde_pontos_turisticos);
 
     printf("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
-    printf("Comparação de cartas (Atributo: População):\n");
+    printf("Densidade Populacional de ambas as cartas:\n");
 
-
-
-    //Calculo da densidade populacional (Carta 01):
-    float densidade_pop01 = populacao / area;
-    printf("A densidade populacional da Carta 01 é: %f \n", densidade_pop01);
-    
-    // Calculo da densidade populacional (Carta 02):
+    //Calculo dos valores derivados
+    float densidade_pop01 = populacao / area;    
     float densidade_pop02 = populacao02 / area02;
-    printf("A densidade populacional da Carta 02 é: %f \n", densidade_pop02);
+    float pib_per_capita01 = pib / populacao;
+    float pib_per_capita02 = pib02 / populacao02;
 
+    // Escolha do atributo para comparação 
+    char atributo_comparado[] = "Densidade Populacional";  // Altere para "Area", "PIB", "Densidade Populacional" ou "PIB per capita"
+    float valor1, valor2;
 
-
-    // Comparar a população de ambas as cartas
-    if (populacao > populacao02){
-        printf("Carta 1 - %s - Populaçao: %d \n", nome_cidade, populacao);
-        printf("Carta 2 - %s - Populaçao: %d\n", nome_cidade02, populacao02);
-        printf("Resultado: Carta 1 VENCEU!\n");
-    } else{
-        printf("Carta 1 - %s - Populaçao: %d\n", nome_cidade, populacao);
-        printf("Carta 2 - %s - Populaçao: %d\n", nome_cidade02, populacao02);
-        printf("Resultado: Carta 2 VENCEU!");
+    // Determina qual valor comparar com base no atributo escolhido
+    if (strcmp(atributo_comparado, "Populacao") == 0) {
+        valor1 = populacao;
+        valor2 = populacao02;
+    } else if (strcmp(atributo_comparado, "Area") == 0) {
+        valor1 = area;
+        valor2 = area02;
+    } else if (strcmp(atributo_comparado, "PIB") == 0) {
+        valor1 = pib;
+        valor2 = pib02;
+    } else if (strcmp(atributo_comparado, "Densidade Populacional") == 0) {
+        valor1 = densidade_pop01;
+        valor2 = densidade_pop02;
+    } else if (strcmp(atributo_comparado, "PIB per capita") == 0) {
+        valor1 = pib_per_capita01;
+        valor2 = pib_per_capita02;
     }
 
+    // Exibir os valores das duas cartas
+    printf("\n====================\n");
+    printf(" Comparação de cartas (Atributo: %s)\n", atributo_comparado);
+    printf("====================\n");
+    printf("Carta 1 - %s (%s): %.2f\n", nome_cidade, estado, valor1);
+    printf("Carta 2 - %s (%s): %.2f\n", nome_cidade02, estado02, valor2);
 
+
+    if (strcmp(atributo_comparado, "Densidade Populacional") == 0) {
+        if (valor1 < valor2) {
+            printf("Resultado: Carta 1 (%s) venceu!\n", nome_cidade);
+        } else {
+            printf("Resultado: Carta 2 (%s) venceu!\n", nome_cidade02);
+        }
+    } else {
+        if (valor1 > valor2) {
+            printf("Resultado: Carta 1 (%s) venceu!\n", nome_cidade);
+        } else {
+            printf("Resultado: Carta 2 (%s) venceu!\n", nome_cidade02);
+        }
+    }
+    
     return 0;
 }
